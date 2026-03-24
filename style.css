@@ -1,3 +1,36 @@
+/* Charity: Water Link Styles */
+#charityWaterLinkWrap {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 100;
+  transition: left 0.3s, right 0.3s, transform 0.3s;
+}
+
+#charityWaterLink {
+  display: inline-block;
+  background: #fff;
+  color: #0d6fa8;
+  font: 700 15px/1 Arial, sans-serif;
+  padding: 8px 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-decoration: none;
+  border: 1px solid #b3e0f7;
+  transition: background 0.2s, color 0.2s;
+}
+#charityWaterLink:hover {
+  background: #e0f4ff;
+  color: #0a4e7a;
+}
+
+/* Centered style for game over */
+#charityWaterLinkWrap.centered {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: 64px;
+}
 @media (max-width: 400px), (max-height: 400px) {
   #charityWaterLogo {
     width: 110px;

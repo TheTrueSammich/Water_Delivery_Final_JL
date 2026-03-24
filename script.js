@@ -1,3 +1,14 @@
+// Charity: Water link dynamic positioning
+const charityWaterLinkWrap = document.getElementById('charityWaterLinkWrap');
+function syncCharityLinkPosition() {
+  if (!charityWaterLinkWrap) return;
+  if (finishSummaryActive) {
+    charityWaterLinkWrap.classList.add('centered');
+  } else {
+    charityWaterLinkWrap.classList.remove('centered');
+  }
+}
+
 const canvas = document.getElementById('gameCanvas');
 const ctx    = canvas.getContext('2d');
 const mobileWaterEl = document.getElementById('mobileWaterCount');
@@ -460,6 +471,7 @@ function showFinishSummary() {
   startMissionConfetti();
   finishSummaryPeopleHelped = getSafeScore();
   finishSummaryActive = true;
+  syncCharityLinkPosition();
 }
 
 function triggerEndGame() {
@@ -495,6 +507,12 @@ function restartGame() {
   resetBallBtn = { x: 0, y: 0, w: 0, h: 0, visible: false };
   resetBird();
   resetMobileDropBall();
+  syncCharityLinkPosition();
+
+  // Move charity link back to left
+  if (charityWaterLinkWrap) {
+    charityWaterLinkWrap.classList.remove('centered');
+  }
 }
 
 function resetBird() {
