@@ -1,3 +1,9 @@
+let redPipeAudio = new Audio('redPipe.mp3');
+redPipeAudio.volume = 0.15;
+let greenPipeAudio = new Audio('greenPipe.mp3');
+greenPipeAudio.volume = 0.15;
+let dingAudio = new Audio('ding.mp3');
+dingAudio.volume = 0.15;
 // Charity: Water link dynamic positioning
 const charityWaterLinkWrap = document.getElementById('charityWaterLinkWrap');
 function syncCharityLinkPosition() {
@@ -279,37 +285,22 @@ function playSfx(name) {
 function playPipeSfx(color, adjustedReward) {
   if (!audioEnabled) return;
 
-  if (color === '#77A8BB') {
-    // Blue pipe: watery shimmer for extra water.
-    playTone(430, 0.09, 'sine', 0.026, 540);
-    playTone(540, 0.12, 'triangle', 0.024, 700);
-    return;
-  }
-
-  if (color === '#FFC907') {
-    // Yellow pipe: bright, high-value ring.
-    playTone(560, 0.08, 'square', 0.03, 780);
-    playTone(780, 0.1, 'triangle', 0.026, 980);
-    return;
-  }
-
-  if (color === '#69DC69') {
-    // Green pipe: quick positive pop.
-    playTone(500, 0.07, 'triangle', 0.024, 620);
-    playTone(620, 0.08, 'sine', 0.02, 760);
-    return;
-  }
-
+  // Play redPipe.mp3 for red pipe, greenPipe.mp3 for blue pipe, ding.mp3 for gold and green pipes
   if (color === '#BF6C46') {
-    // Brown pipe: dull negative thunk.
-    playTone(280, 0.13, 'sawtooth', 0.03, 170);
-    return;
-  }
-
-  if (adjustedReward > 0) {
-    playSfx('score');
-  } else if (adjustedReward < 0) {
-    playSfx('penalty');
+    if (redPipeAudio) {
+      redPipeAudio.currentTime = 0;
+      redPipeAudio.play();
+    }
+  } else if (color === '#77A8BB') {
+    if (greenPipeAudio) {
+      greenPipeAudio.currentTime = 0;
+      greenPipeAudio.play();
+    }
+  } else if (color === '#FFC907' || color === '#69DC69') {
+    if (dingAudio) {
+      dingAudio.currentTime = 0;
+      dingAudio.play();
+    }
   }
 }
 
@@ -421,7 +412,12 @@ function getLevelInstruction(level) {
 function showLevelNotice(level) {
   levelNoticeText = `Level ${level} Reached!\n${getLevelInstruction(level)}`;
   levelNoticeUntilMs = performance.now() + LEVEL_NOTICE_DURATION_MS;
-  playSfx('levelUp');
+  if (level === 4 && level4Audio) {
+    level4Audio.currentTime = 0;
+    level4Audio.play();
+  } else {
+    playSfx('levelUp');
+  }
 }
 
 function setScore(nextScore) {
@@ -454,13 +450,28 @@ function updateUnlockedLevel() {
   }
 }
 
+
+// Audio elements for mp3 playback
+let gameStartAudio = new Audio('gameStart.mp3');
+let gameOverAudio = new Audio('gameOver.mp3');
+let level4Audio = new Audio('level4.mp3');
+let gameEndAudio = new Audio('gameEnd.mp3');
+
 function startGame() {
   initAudio();
+  if (gameStartAudio) {
+    gameStartAudio.currentTime = 0;
+    gameStartAudio.play();
+  }
   gameStarted = true;
   if (startMenuEl) startMenuEl.classList.add('hidden');
 }
 
 function finishToStartMenu() {
+  if (gameEndAudio) {
+    gameEndAudio.currentTime = 0;
+    gameEndAudio.play();
+  }
   restartGame();
   gameStarted = false;
   if (startMenuEl) startMenuEl.classList.remove('hidden');
@@ -474,9 +485,14 @@ function showFinishSummary() {
   syncCharityLinkPosition();
 }
 
+
 function triggerEndGame() {
   gameOver = true;
   showHint = false;
+  if (gameOverAudio) {
+    gameOverAudio.currentTime = 0;
+    gameOverAudio.play();
+  }
   showFinishSummary();
 }
 
