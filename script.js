@@ -1,9 +1,9 @@
 let redPipeAudio = new Audio('redPipe.mp3');
-redPipeAudio.volume = 0.18;
+redPipeAudio.volume = 0.5;
 let greenPipeAudio = new Audio('greenPipe.mp3');
-greenPipeAudio.volume = 0.18;
+greenPipeAudio.volume = 0.5;
 let dingAudio = new Audio('ding.mp3');
-dingAudio.volume = 0.08;
+dingAudio.volume = 0.5;
 // Charity: Water link dynamic positioning
 const charityWaterLinkWrap = document.getElementById('charityWaterLinkWrap');
 function syncCharityLinkPosition() {
